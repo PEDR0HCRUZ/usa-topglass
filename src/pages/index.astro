@@ -1,0 +1,30 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { Navbar } from '../components/Navbar'
+import { Hero } from '../components/Hero'
+import { TrustBar } from '../components/TrustBar'
+import { Reviews } from '../components/Reviews'
+import { Services } from '../components/Services'
+import { WhyUs } from '../components/WhyUs'
+import { Gallery } from '../components/Gallery'
+import { SecondaryServices } from '../components/SecondaryServices'
+import { ContactForm } from '../components/ContactForm'
+import { Footer } from '../components/Footer'
+---
+
+<Layout
+  title="USA Top Glass — Frameless Shower Door Installation in Myrtle Beach, SC"
+  description="Professional frameless shower door installation in Myrtle Beach. Custom glass shower doors, enclosures & replacements. Free estimates. Call (843) 742-8228."
+  keywords="frameless shower door myrtle beach, glass shower door installation sc, custom shower enclosure, shower door replacement myrtle beach"
+>
+  <Navbar client:load />
+  <Hero client:load />
+  <TrustBar />
+  <Reviews client:visible />
+  <Services />
+  <WhyUs client:load />
+  <Gallery />
+  <SecondaryServices />
+  <ContactForm client:visible />
+  <Footer />
+</Layout>

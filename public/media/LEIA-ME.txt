@@ -1,0 +1,40 @@
+================================================
+  USA TOP GLASS — PASTA DE MÍDIA
+================================================
+
+📁 ESTRUTURA:
+
+  /media/
+  ├── hero/
+  │   └── hero-bg.jpg        ← foto de fundo do hero principal
+  │
+  └── projects/
+      ├── project-1.jpg      ← fotos do carrossel (jpg, png, webp)
+      ├── project-2.jpg
+      ├── project-3.jpg
+      ├── project-4.jpg
+      ├── project-5.jpg
+      ├── project-6.jpg
+      ├── project-7.jpg
+      ├── project-8.jpg
+      ├── project-1.mp4      ← vídeos também funcionam (mp4)
+      └── ...
+
+================================================
+  INSTRUÇÕES:
+================================================
+
+1. Coloque suas fotos/vídeos nas pastas acima
+2. Nomeie como project-1, project-2... (ou qualquer nome)
+3. Avise o Claude com os nomes dos arquivos
+4. O carrossel vai carregar automaticamente
+
+  FORMATOS ACEITOS:
+  - Imagens: .jpg .jpeg .png .webp
+  - Vídeos:  .mp4 .webm
+
+  TAMANHO RECOMENDADO:
+  - Imagens: mínimo 800x600px
+  - Vídeos:  máximo 20MB por arquivo
+
+================================================

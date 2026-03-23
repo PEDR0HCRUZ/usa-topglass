@@ -1,0 +1,15 @@
+---
+import Layout from '../layouts/Layout.astro'
+import { Navbar } from '../components/Navbar'
+import { GalleryPage } from '../components/GalleryPage'
+import { Footer } from '../components/Footer'
+---
+
+<Layout
+  title="Gallery — USA Top Glass | Myrtle Beach Glass Projects"
+  description="Browse our full portfolio of frameless shower doors, glass enclosures and custom glass installations across Myrtle Beach, SC."
+>
+  <Navbar client:load />
+  <GalleryPage client:load />
+  <Footer />
+</Layout>

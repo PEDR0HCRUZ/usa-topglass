@@ -1,0 +1,172 @@
+/* ============================================
+   USA TOP GLASS — STYLE GUIDE
+   Paleta: Deep Blue + Ice White + Chrome
+   Fonts: Playfair Display (headings) + DM Sans (body)
+============================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=DM+Sans:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Brand Colors */
+    --blue-deep:    #1B4F8A;   /* primary — navbar, headings */
+    --blue-mid:     #2E86C1;   /* links, hover, accents */
+    --blue-light:   #EBF5FB;   /* light section backgrounds */
+    --chrome:       #8A9BA8;   /* secondary text, dividers */
+    --bg:           #F8FAFB;   /* page background */
+    --surface:      #FFFFFF;   /* cards, panels */
+    --dark:         #1A1A1A;   /* body text */
+    --mid:          #4A5568;   /* secondary text */
+    --border:       #E2E8F0;   /* subtle borders */
+
+    /* Typography scale */
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', system-ui, sans-serif;
+  }
+
+  * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    color: var(--dark);
+    background-color: var(--bg);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  h1, h2, h3 {
+    font-family: var(--font-display);
+    line-height: 1.2;
+  }
+
+  h4, h5, h6, button, label, nav {
+    font-family: var(--font-body);
+  }
+}
+
+@layer components {
+
+  /* ── Buttons ── */
+  .btn-primary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 14px 28px;
+    background-color: var(--blue-deep);
+    color: #fff;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    border-radius: 4px;
+    border: 2px solid var(--blue-deep);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-primary:hover {
+    background-color: #153f70;
+    border-color: #153f70;
+    transform: translateY(-1px);
+    box-shadow: 0 8px 24px rgba(27, 79, 138, 0.3);
+  }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 14px 28px;
+    background-color: transparent;
+    color: var(--blue-deep);
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    border-radius: 4px;
+    border: 2px solid var(--blue-deep);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-secondary:hover {
+    background-color: var(--blue-deep);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  .btn-white {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 14px 28px;
+    background-color: #fff;
+    color: var(--blue-deep);
+    font-family: var(--font-body);
+    font-weight: 700;
+    font-size: 0.9rem;
+    border-radius: 4px;
+    border: 2px solid #fff;
+    transition: all 0.2s ease;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+  .btn-white:hover {
+    background-color: transparent;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+
+  /* ── Section label ── */
+  .section-tag {
+    display: inline-block;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--blue-mid);
+    margin-bottom: 0.75rem;
+  }
+
+  /* ── Glass card effect ── */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.75);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+  }
+
+  /* ── Star rating ── */
+  .stars {
+    display: flex;
+    gap: 2px;
+    color: #F4B400;
+  }
+}
+
+/* ── Marquee animation ── */
+@keyframes marquee {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.marquee-track {
+  display: flex;
+  animation: marquee 40s linear infinite;
+  width: max-content;
+}
+
+/* ── Fade-in on scroll (progressive enhancement) ── */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.fade-up {
+  animation: fadeUp 0.6s ease forwards;
+}
