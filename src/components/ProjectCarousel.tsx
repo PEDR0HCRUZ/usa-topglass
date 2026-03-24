@@ -3,17 +3,17 @@ import { useRef, useEffect } from 'react'
 type MediaItem = { src: string; type: 'image' | 'video'; alt?: string }
 
 const galleryItems: MediaItem[] = [
-  { src: '/gallery-medias/carrossel%20pg%201.JPG', type: 'image', alt: 'Frameless shower door installation' },
-  { src: '/gallery-medias/carrossel%20pg%202.JPG', type: 'image', alt: 'Custom glass shower enclosure' },
-  { src: '/gallery-medias/carrossel%20pg%203.JPG', type: 'image', alt: 'Shower door installation Myrtle Beach' },
-  { src: '/gallery-medias/carrossel%20pg%204.JPG', type: 'image', alt: 'Frameless glass enclosure' },
-  { src: '/gallery-medias/WhatsApp%20Image%202024-12-26%20at%2018.12.17.jpeg', type: 'image', alt: 'Decorative glass panel' },
-  { src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.00.jpeg', type: 'image', alt: 'Frameless shower with tub' },
-  { src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg', type: 'image', alt: 'Corner shower enclosure' },
-  { src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.01%20(1).jpeg', type: 'image', alt: 'Shower with plants' },
-  { src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg', type: 'image', alt: 'Corner glass enclosure' },
-  { src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg', type: 'image', alt: 'Sunroom glass installation' },
-  { src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg', type: 'image', alt: 'Glass room installation' },
+  { src: '/media/gallery-medias/carrossel%20pg%201.JPG', type: 'image', alt: 'Frameless shower door installation' },
+  { src: '/media/gallery-medias/carrossel%20pg%202.JPG', type: 'image', alt: 'Custom glass shower enclosure' },
+  { src: '/media/gallery-medias/carrossel%20pg%203.JPG', type: 'image', alt: 'Shower door installation Myrtle Beach' },
+  { src: '/media/gallery-medias/carrossel%20pg%204.JPG', type: 'image', alt: 'Frameless glass enclosure' },
+  { src: '/media/gallery-medias/WhatsApp%20Image%202024-12-26%20at%2018.12.17.jpeg', type: 'image', alt: 'Decorative glass panel' },
+  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.00.jpeg', type: 'image', alt: 'Frameless shower with tub' },
+  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg', type: 'image', alt: 'Corner shower enclosure' },
+  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.01%20(1).jpeg', type: 'image', alt: 'Shower with plants' },
+  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg', type: 'image', alt: 'Corner glass enclosure' },
+  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg', type: 'image', alt: 'Sunroom glass installation' },
+  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg', type: 'image', alt: 'Glass room installation' },
 ]
 
 export function ProjectCarousel() {

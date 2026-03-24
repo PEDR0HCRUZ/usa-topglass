@@ -136,9 +136,9 @@ if os.path.exists(astro_src):
                 content = content.replace(VERCEL_URL, WP_UPLOADS_URL)
                 changed = True
             # Paths relativos /gallery-medias/ nos bundles React
-            if '"/gallery-medias/' in content or "'/gallery-medias/" in content:
-                content = content.replace('"/gallery-medias/', f'"{WP_UPLOADS_URL}/gallery-medias/')
-                content = content.replace("'/gallery-medias/", f"'{WP_UPLOADS_URL}/gallery-medias/")
+            if '"/media/gallery-medias/' in content or "'/media/gallery-medias/" in content:
+                content = content.replace('"/media/gallery-medias/', f'"{WP_UPLOADS_URL}/gallery-medias/')
+                content = content.replace("'/media/gallery-medias/", f"'{WP_UPLOADS_URL}/gallery-medias/")
                 changed = True
             if changed:
                 with open(fpath, 'w', encoding='utf-8') as f:

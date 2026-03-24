@@ -7,13 +7,13 @@ import { GalleryPage } from '../components/GalleryPage'
 import { Footer } from '../components/Footer'
 
 const IMAGE_EXTS = /\.(jpg|jpeg|png|webp|gif|JPG|JPEG|PNG|WEBP)$/i
-const galleryDir = path.resolve('./public/gallery-medias')
+const galleryDir = path.resolve('./public/media/gallery-medias')
 
 const photos = fs.readdirSync(galleryDir)
   .filter(f => IMAGE_EXTS.test(f))
   .sort()
   .map(f => ({
-    src: `/gallery-medias/${encodeURIComponent(f)}`,
+    src: `/media/gallery-medias/${encodeURIComponent(f)}`,
     label: 'Glass Project',
   }))
 ---
