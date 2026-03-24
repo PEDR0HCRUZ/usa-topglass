@@ -25,14 +25,14 @@ export function Footer() {
     <footer style={{ backgroundColor: '#0F1E35' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 pt-[65px] pb-[37px]">
 
-        <div className="grid md:grid-cols-[1fr_2fr] gap-20 pb-10" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
+        <div className="grid md:grid-cols-4 gap-12 pb-10" style={{ borderBottom: '1px solid rgba(255,255,255,0.08)' }}>
 
           {/* Brand */}
           <div>
             <div className="mb-4">
               <img src="/logo-hori-branco.svg" alt="USA Top Glass" className="h-9 w-auto" />
             </div>
-            <p className="text-sm leading-relaxed mb-10" style={{ color: 'rgba(255,255,255,0.45)' }}>
+            <p className="text-sm leading-relaxed mb-5" style={{ color: 'rgba(255,255,255,0.45)' }}>
               Your trusted glass & shower door specialists in Myrtle Beach, SC.
             </p>
             <div className="space-y-4">
@@ -56,40 +56,38 @@ export function Footer() {
             </div>
           </div>
 
-          {/* Services + Areas */}
-          <div className="flex justify-between gap-10">
+          {/* Empty column */}
+          <div />
 
-            {/* Services */}
-            <div>
-              <h4 className="text-white text-xs font-semibold uppercase tracking-widest mb-5">
-                Our Services
-              </h4>
-              <ul className="space-y-4">
-                {services.map((s) => (
-                  <li key={s}>
-                    <a href="#services" className="text-xs hover:opacity-80 transition-opacity"
-                       style={{ color: 'rgba(255,255,255,0.5)' }}>
-                      {s}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
+          {/* Services */}
+          <div>
+            <h4 className="text-white text-xs font-semibold uppercase tracking-widest mb-5">
+              Our Services
+            </h4>
+            <ul className="space-y-2.5">
+              {services.map((s) => (
+                <li key={s}>
+                  <a href="#services" className="text-xs hover:opacity-80 transition-opacity"
+                     style={{ color: 'rgba(255,255,255,0.5)' }}>
+                    {s}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-            {/* Areas */}
-            <div>
-              <h4 className="text-white text-xs font-semibold uppercase tracking-widest mb-5">
-                Service Area
-              </h4>
-              <ul className="space-y-2.5">
-                {areas.map((a) => (
-                  <li key={a} className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
-                    {a}
-                  </li>
-                ))}
-              </ul>
-            </div>
-
+          {/* Areas */}
+          <div>
+            <h4 className="text-white text-xs font-semibold uppercase tracking-widest mb-5">
+              Service Area
+            </h4>
+            <ul className="space-y-2.5">
+              {areas.map((a) => (
+                <li key={a} className="text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
+                  {a}
+                </li>
+              ))}
+            </ul>
           </div>
 
         </div>

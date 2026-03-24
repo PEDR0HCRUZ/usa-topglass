@@ -1,5 +1,6 @@
-import { useState, useEffect, useCallback } from 'react'
-import { X, ChevronLeft, ChevronRight, Phone, MessageCircle } from 'lucide-react'
+import { useState, useCallback } from 'react'
+import { Phone, MessageCircle } from 'lucide-react'
+import { Lightbox } from './Lightbox'
 
 const photos = [
   { src: '/media/projects/carrossel%20pg%201.JPG',                                    label: 'Frameless Shower Door' },
@@ -47,21 +48,6 @@ export function GalleryPage() {
   const prev   = useCallback(() => setLightbox(i => i !== null ? (i - 1 + photos.length) % photos.length : null), [])
   const next   = useCallback(() => setLightbox(i => i !== null ? (i + 1) % photos.length : null), [])
 
-  useEffect(() => {
-    if (lightbox === null) return
-    const handler = (e: KeyboardEvent) => {
-      if (e.key === 'Escape')     close()
-      if (e.key === 'ArrowLeft')  prev()
-      if (e.key === 'ArrowRight') next()
-    }
-    window.addEventListener('keydown', handler)
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', handler)
-      document.body.style.overflow = ''
-    }
-  }, [lightbox, close, prev, next])
-
   return (
     <>
       {/* Hero strip */}
@@ -77,11 +63,11 @@ export function GalleryPage() {
           </p>
           <div className="flex flex-wrap justify-center gap-3">
             <a href="tel:+18437428228" className="btn-white">
-              <Phone size={15} /> Call for a Free Estimate
+              Call for a Free Estimate <Phone size={15} />
             </a>
             <a href="https://wa.me/18437428228" target="_blank" rel="noreferrer" className="btn-white"
                style={{ backgroundColor: 'rgba(255,255,255,0.15)', borderColor: 'rgba(255,255,255,0.8)', color: '#fff' }}>
-              <MessageCircle size={15} /> WhatsApp Us
+              WhatsApp Us <MessageCircle size={15} />
             </a>
           </div>
         </div>
@@ -117,56 +103,13 @@ export function GalleryPage() {
         </div>
       </section>
 
-      {/* Lightbox */}
-      {lightbox !== null && (
-        <div
-          className="fixed inset-0 z-[100] flex items-center justify-center"
-          style={{ backgroundColor: 'rgba(0,0,0,0.92)' }}
-          onClick={close}
-        >
-          {/* Close */}
-          <button
-            onClick={close}
-            className="absolute top-4 right-4 z-10 flex items-center justify-center w-10 h-10 rounded-full"
-            style={{ backgroundColor: 'rgba(255,255,255,0.15)', color: '#fff' }}
-          >
-            <X size={20} />
-          </button>
-
-          {/* Image + adjacent arrows */}
-          <div
-            onClick={(e) => e.stopPropagation()}
-            style={{ position: 'relative', display: 'inline-flex', alignItems: 'center' }}
-          >
-            <button
-              onClick={(e) => { e.stopPropagation(); prev() }}
-              className="flex items-center justify-center w-11 h-11 rounded-full flex-shrink-0"
-              style={{ position: 'absolute', left: '-52px', backgroundColor: 'rgba(255,255,255,0.18)', color: '#fff', zIndex: 10 }}
-            >
-              <ChevronLeft size={22} />
-            </button>
-
-            <img
-              src={photos[lightbox].src}
-              alt={photos[lightbox].label}
-              style={{ maxWidth: '90vw', maxHeight: '88vh', objectFit: 'contain', borderRadius: '6px', userSelect: 'none', display: 'block' }}
-            />
-
-            <button
-              onClick={(e) => { e.stopPropagation(); next() }}
-              className="flex items-center justify-center w-11 h-11 rounded-full flex-shrink-0"
-              style={{ position: 'absolute', right: '-52px', backgroundColor: 'rgba(255,255,255,0.18)', color: '#fff', zIndex: 10 }}
-            >
-              <ChevronRight size={22} />
-            </button>
-          </div>
-
-          {/* Counter */}
-          <p className="absolute bottom-4 text-xs" style={{ color: 'rgba(255,255,255,0.5)' }}>
-            {lightbox + 1} / {photos.length}
-          </p>
-        </div>
-      )}
+      <Lightbox
+        items={photos.map(p => ({ src: p.src, alt: p.label }))}
+        index={lightbox}
+        onClose={close}
+        onPrev={prev}
+        onNext={next}
+      />
     </>
   )
 }

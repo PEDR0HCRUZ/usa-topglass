@@ -157,15 +157,16 @@
 /* ── WhyUs seal — responsive position ── */
 .whyus-seal {
   top: -54px;
-  right: -54px;
+  right: -44px;
 }
 .whyus-star-card {
-  left: -24px;
+  left: 50%;
+  transform: translateX(-50%);
 }
 @media (max-width: 1023px) {
   .whyus-seal {
     top: 12px;
-    right: -16px;
+    right: 12px;
   }
   .whyus-star-card {
     left: 12px;

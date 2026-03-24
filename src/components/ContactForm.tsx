@@ -2,7 +2,7 @@ import { Phone, MessageCircle, Mail, MapPin, Send } from 'lucide-react'
 
 export function ContactForm() {
   return (
-    <section data-section="contact" id="contact" className="py-[92px]" style={{ backgroundColor: 'var(--blue-deep)' }}>
+    <section data-section="contact" id="contact" className="pt-[92px] pb-[140px]" style={{ background: 'linear-gradient(135deg, #0F2346 0%, #1B4F8A 55%, #2E86C1 100%)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
 
         {/* Header */}

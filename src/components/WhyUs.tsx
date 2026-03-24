@@ -58,6 +58,11 @@ export function WhyUs() {
           to   { transform: rotate(360deg); }
         }
         .seal-ring { animation: spin-slow 14s linear infinite; }
+        @keyframes fade-in-up-center {
+          from { opacity: 0; transform: translateX(-50%) translateY(20px); }
+          to   { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+        .whyus-flag-card { animation: fade-in-up-center 0.6s ease forwards; animation-delay: 0.8s; opacity: 0; }
       `}</style>
 
       <div className="relative max-w-7xl mx-auto px-4 sm:px-6">
@@ -80,9 +85,13 @@ export function WhyUs() {
               results — on time, within budget, and with zero hassle.
             </p>
 
-            <ul className="space-y-3 mb-10">
+            <ul className="grid grid-cols-2 gap-x-6 gap-y-5 mb-10">
               {reasons.map(({ icon: Icon, text }) => (
-                <li key={text} className="flex items-center gap-3">
+                <li
+                  key={text}
+                  className="flex items-center gap-3 rounded-xl px-3 py-2"
+                  style={{ background: 'rgba(255,255,255,0.07)', border: '1px solid rgba(255,255,255,0.12)' }}
+                >
                   <div
                     className="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0"
                     style={{ background: 'rgba(255,255,255,0.12)', border: '1px solid rgba(255,255,255,0.18)' }}
@@ -95,8 +104,8 @@ export function WhyUs() {
             </ul>
 
             <a href="tel:+18437428228" className="btn-white">
-              <Phone size={16} />
               Call Now for a Free Estimate
+              <Phone size={16} />
             </a>
           </div>
 
@@ -172,27 +181,6 @@ export function WhyUs() {
               />
             </div>
 
-            {/* Floating card — stars + location only */}
-            <div
-              className="absolute bottom-6 rounded-2xl px-5 py-4 whyus-star-card"
-              style={{
-                background: 'rgba(255,255,255,0.3)',
-                backdropFilter: 'blur(6px)',
-                border: '1px solid rgba(255,255,255,1)',
-                minWidth: '190px',
-                zIndex: 10,
-              }}
-            >
-              <div className="flex items-center gap-0.5 justify-center">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={15} fill="#F4B400" color="#F4B400" />
-                ))}
-              </div>
-              <div className="flex items-center gap-1 mt-2 justify-center">
-                <MapPin size={12} color="#fff" />
-                <span className="text-xs" style={{ color: '#fff' }}>Myrtle Beach, SC</span>
-              </div>
-            </div>
 
           </div>
         </div>

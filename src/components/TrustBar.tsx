@@ -20,7 +20,7 @@ export function TrustBar() {
               className="flex flex-col items-center text-center gap-2 py-3"
             >
               <div
-                className="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0"
+                className="w-10 h-10 rounded-lg flex items-center justify-center flex-shrink-0"
                 style={{ backgroundColor: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.15)' }}
               >
                 <Icon size={18} color="rgba(168,212,245,0.9)" />

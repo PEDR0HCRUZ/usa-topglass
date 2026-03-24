@@ -27,7 +27,7 @@ export function Reviews() {
             <br />
             Homeowners in Myrtle Beach
           </h2>
-          <p className="mt-4 text-base max-w-xl mx-auto" style={{ color: 'var(--mid)' }}>
+          <p className="mt-4 text-base max-w-2xl mx-auto" style={{ color: 'var(--mid)' }}>
             Homeowners across Myrtle Beach trust USA Top Glass for frameless shower door
             installations, glass replacements, and sliding door services.
           </p>
@@ -38,8 +38,8 @@ export function Reviews() {
 
         <div className="text-center mt-10">
           <a href="tel:+18437428228" className="btn-primary">
-            <Phone size={16} />
             Call a 5-Star Company — (843) 742-8228
+            <Phone size={16} />
           </a>
         </div>
 

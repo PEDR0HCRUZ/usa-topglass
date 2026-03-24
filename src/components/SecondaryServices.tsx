@@ -46,8 +46,8 @@ export function SecondaryServices() {
               for homes and businesses.
             </p>
             <a href="tel:+18437428228" className="btn-primary">
-              <Phone size={15} />
               Call for Any Glass Need
+              <Phone size={15} />
             </a>
           </div>
 

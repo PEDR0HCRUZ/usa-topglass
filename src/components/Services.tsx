@@ -93,8 +93,8 @@ export function Services() {
 
         <div className="text-center">
           <a href="tel:+18437428228" className="btn-primary">
-            <Phone size={16} />
             Call to Check Options &amp; Pricing — (843) 742-8228
+            <Phone size={16} />
           </a>
         </div>
 

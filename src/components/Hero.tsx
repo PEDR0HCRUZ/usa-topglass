@@ -1,27 +1,30 @@
 import { Phone, MessageCircle, Star, Shield, CheckCircle } from 'lucide-react'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState, useCallback } from 'react'
+import { Lightbox } from './Lightbox'
 
 type MediaItem = { src: string; type: 'image' | 'video'; alt?: string }
 
 const carouselItems: MediaItem[] = [
-  { src: '/media/projects/carrossel%20pg%201.JPG',                                       type: 'image', alt: 'Frameless shower door installation' },
-  { src: '/media/projects/carrossel%20pg%202.JPG',                                       type: 'image', alt: 'Custom glass shower enclosure' },
-  { src: '/media/projects/carrossel%20pg%203.JPG',                                       type: 'image', alt: 'Shower door installation Myrtle Beach' },
-  { src: '/media/projects/carrossel%20pg%204.JPG',                                       type: 'image', alt: 'Frameless glass enclosure' },
-  { src: '/media/projects/WhatsApp%20Image%202024-12-26%20at%2018.12.17.jpeg',           type: 'image', alt: 'Decorative glass panel' },
-  { src: '/media/projects/WhatsApp%20Image%202025-01-30%20at%2016.02.00.jpeg',           type: 'image', alt: 'Frameless shower with tub' },
-  { src: '/media/projects/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg',           type: 'image', alt: 'Corner shower enclosure' },
-  { src: '/media/projects/WhatsApp%20Image%202025-01-30%20at%2016.02.01%20(1).jpeg',    type: 'image', alt: 'Shower with plants' },
-  { src: '/media/projects/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg',           type: 'image', alt: 'Corner glass enclosure' },
-  { src: '/media/projects/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg',    type: 'image', alt: 'Sunroom glass installation' },
-  { src: '/media/projects/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg',    type: 'image', alt: 'Glass room installation' },
+  { src: '/media/projects/carrossel%20infinito/614f4c98-2ffe-4b44-a5e8-5249394d1354.jpg',                   type: 'image', alt: 'Frameless shower door installation' },
+  { src: '/media/projects/carrossel%20infinito/WhatsApp%20Image%202024-12-26%20at%2018.12.17.jpeg',         type: 'image', alt: 'Decorative glass panel' },
+  { src: '/media/projects/carrossel%20infinito/WhatsApp%20Image%202025-01-30%20at%2016.02.00.jpeg',         type: 'image', alt: 'Frameless shower with tub' },
+  { src: '/media/projects/carrossel%20infinito/WhatsApp%20Image%202025-01-30%20at%2016.02.01%20(1).jpeg',  type: 'image', alt: 'Shower with plants' },
+  { src: '/media/projects/carrossel%20infinito/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg',         type: 'image', alt: 'Corner shower enclosure' },
+  { src: '/media/projects/carrossel%20infinito/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg',  type: 'image', alt: 'Sunroom glass installation' },
+  { src: '/media/projects/carrossel%20infinito/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg',  type: 'image', alt: 'Glass room installation' },
+  { src: '/media/projects/carrossel%20infinito/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg',         type: 'image', alt: 'Corner glass enclosure' },
 ]
 
 export function Hero() {
-  const trackRef = useRef<HTMLDivElement>(null)
-  const posRef   = useRef(0)
-  const rafRef   = useRef<number>()
-  const drag     = useRef({ active: false, startX: 0, startPos: 0 })
+  const trackRef  = useRef<HTMLDivElement>(null)
+  const posRef    = useRef(0)
+  const rafRef    = useRef<number>()
+  const drag      = useRef({ active: false, startX: 0, startPos: 0, moved: false })
+  const [lightbox, setLightbox] = useState<number | null>(null)
+
+  const closeLightbox = useCallback(() => setLightbox(null), [])
+  const prevPhoto     = useCallback(() => setLightbox(i => i !== null ? (i - 1 + carouselItems.length) % carouselItems.length : null), [])
+  const nextPhoto     = useCallback(() => setLightbox(i => i !== null ? (i + 1) % carouselItems.length : null), [])
 
   useEffect(() => {
     const el = trackRef.current
@@ -43,22 +46,31 @@ export function Hero() {
     return () => { clearTimeout(timer); if (rafRef.current) cancelAnimationFrame(rafRef.current) }
   }, [])
 
-  const onMouseDown = (e: React.MouseEvent) => { drag.current = { active: true, startX: e.clientX, startPos: posRef.current } }
+  const onMouseDown = (e: React.MouseEvent) => {
+    drag.current = { active: true, startX: e.clientX, startPos: posRef.current, moved: false }
+    if (e.currentTarget instanceof HTMLElement) e.currentTarget.style.cursor = 'grabbing'
+  }
   const onMouseMove = (e: React.MouseEvent) => {
     if (!drag.current.active) return
+    if (Math.abs(e.clientX - drag.current.startX) > 5) drag.current.moved = true
     posRef.current = drag.current.startPos + (drag.current.startX - e.clientX)
     if (trackRef.current) trackRef.current.style.transform = `translateX(-${posRef.current}px)`
   }
-  const onMouseUp = () => { drag.current.active = false }
-  const onTouchStart = (e: React.TouchEvent) => { drag.current = { active: true, startX: e.touches[0].clientX, startPos: posRef.current } }
+  const onMouseUp = (e: React.MouseEvent) => {
+    drag.current.active = false
+    if (e.currentTarget instanceof HTMLElement) e.currentTarget.style.cursor = 'grab'
+  }
+  const onTouchStart = (e: React.TouchEvent) => { drag.current = { active: true, startX: e.touches[0].clientX, startPos: posRef.current, moved: false } }
   const onTouchMove  = (e: React.TouchEvent) => {
     if (!drag.current.active) return
+    if (Math.abs(e.touches[0].clientX - drag.current.startX) > 5) drag.current.moved = true
     posRef.current = drag.current.startPos + (drag.current.startX - e.touches[0].clientX)
     if (trackRef.current) trackRef.current.style.transform = `translateX(-${posRef.current}px)`
   }
   const onTouchEnd = () => { drag.current.active = false }
 
   return (
+    <>
     <section className="relative overflow-hidden" style={{ display: 'flex', flexDirection: 'column' }}>
 
       {/* Background image */}
@@ -70,7 +82,7 @@ export function Hero() {
         />
         <div
           className="absolute inset-0"
-          style={{ background: 'linear-gradient(105deg, rgba(15,35,70,0.88) 0%, rgba(27,79,138,0.72) 50%, rgba(15,35,70,0.45) 100%)' }}
+          style={{ background: 'linear-gradient(105deg, rgba(10,25,55,0.96) 0%, rgba(15,50,110,0.88) 50%, rgba(10,25,55,0.80) 100%)' }}
         />
       </div>
 
@@ -84,9 +96,9 @@ export function Hero() {
               className="mb-8 overflow-hidden rounded-full"
               style={{
                 maxWidth: '50%',
-                backgroundColor: 'rgba(255,255,255,0.12)',
+                backgroundColor: 'rgba(255,255,255,0.18)',
                 backdropFilter: 'blur(8px)',
-                border: '1px solid rgba(255,255,255,0.2)',
+                border: '1px solid rgba(255,255,255,0.35)',
                 padding: '6px 0',
               }}
             >
@@ -95,9 +107,9 @@ export function Hero() {
                   <span key={copy} className="flex items-center gap-3 text-xs font-semibold text-white" style={{ paddingRight: '2rem' }}>
                     <Star size={13} fill="#F4B400" color="#F4B400" />
                     <span>5-Star Google Rated</span>
-                    <Shield size={13} style={{ opacity: 0.7 }} />
+                    <Shield size={13} />
                     <span>Licensed &amp; Insured</span>
-                    <CheckCircle size={13} style={{ opacity: 0.7 }} />
+                    <CheckCircle size={13} />
                     <span>Myrtle Beach's #1 Glass Installer</span>
                   </span>
                 ))}
@@ -116,7 +128,7 @@ export function Hero() {
               in Myrtle Beach, SC
             </h1>
 
-            <p data-gsap="hero-desc" className="mb-8 text-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.82)', maxWidth: '520px' }}>
+            <p data-gsap="hero-desc" className="mb-8 text-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.95)', maxWidth: '520px' }}>
               Transform your bathroom with a beautiful, custom frameless shower
               door. Professional installation · Free estimates · Same-week scheduling available.
             </p>
@@ -124,18 +136,18 @@ export function Hero() {
             {/* CTAs */}
             <div data-gsap="hero-ctas" className="flex flex-wrap gap-4">
               <a href="tel:+18437428228" className="btn-white">
-                <Phone size={16} />
                 Call for a Free Estimate
+                <Phone size={16} />
               </a>
               <a
                 href="https://wa.me/18437428228"
                 target="_blank"
                 rel="noreferrer"
                 className="btn-white"
-                style={{ backgroundColor: 'rgba(255,255,255,0.12)', color: '#fff', borderColor: 'rgba(255,255,255,0.5)', backdropFilter: 'blur(8px)' }}
+                style={{ backgroundColor: 'rgba(255,255,255,0.18)', color: '#fff', borderColor: 'rgba(255,255,255,0.75)', backdropFilter: 'blur(8px)' }}
               >
-                <MessageCircle size={16} />
                 WhatsApp Us
+                <MessageCircle size={16} />
               </a>
             </div>
 
@@ -144,7 +156,7 @@ export function Hero() {
       </div>
 
       {/* Carousel — inside the hero, shares the dark background */}
-      <div className="relative pb-10">
+      <div className="relative pt-16 pb-10">
 
         {/* Fade edges — blend with the hero's dark tones */}
         <div className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, rgba(15,35,70,0.85), transparent)' }} />
@@ -156,7 +168,7 @@ export function Hero() {
           onMouseDown={onMouseDown}
           onMouseMove={onMouseMove}
           onMouseUp={onMouseUp}
-          onMouseLeave={onMouseUp}
+          onMouseLeave={e => { drag.current.active = false; e.currentTarget.style.cursor = 'grab' }}
           onTouchStart={onTouchStart}
           onTouchMove={onTouchMove}
           onTouchEnd={onTouchEnd}
@@ -167,7 +179,12 @@ export function Hero() {
             style={{ gap: '16px', willChange: 'transform', userSelect: 'none' }}
           >
             {[...carouselItems, ...carouselItems, ...carouselItems].map((item, i) => (
-              <div key={i} className="flex-shrink-0 overflow-hidden rounded-lg" style={{ width: '340px', height: '400px' }}>
+              <div
+                key={i}
+                className="flex-shrink-0 overflow-hidden rounded-lg"
+                style={{ width: '340px', height: '400px' }}
+                onClick={() => { if (!drag.current.moved) setLightbox(i % carouselItems.length) }}
+              >
                 {item.type === 'video' ? (
                   <video src={item.src} autoPlay muted loop playsInline className="w-full h-full object-cover" draggable={false} />
                 ) : (
@@ -181,5 +198,14 @@ export function Hero() {
       </div>
 
     </section>
+
+    <Lightbox
+      items={carouselItems}
+      index={lightbox}
+      onClose={closeLightbox}
+      onPrev={prevPhoto}
+      onNext={nextPhoto}
+    />
+    </>
   )
 }

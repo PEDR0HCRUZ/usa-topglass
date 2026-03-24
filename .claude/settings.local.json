@@ -1,7 +1,10 @@
 {
   "permissions": {
     "allow": [
-      "Bash(grep -E \"\\\\.\\(jpg|jpeg|png|webp|JPG|JPEG|PNG\\)$\")"
+      "Bash(grep -E \"\\\\.\\(jpg|jpeg|png|webp|JPG|JPEG|PNG\\)$\")",
+      "Bash(python3:*)",
+      "Bash(find 'e:/Pages Machine/USA TopGlass/public' -name *.png -o -name *.PNG)",
+      "Bash(node -e \":*)"
     ]
   }
 }

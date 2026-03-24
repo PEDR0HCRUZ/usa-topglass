@@ -57,8 +57,8 @@ export function Navbar() {
               <img src="/icon-whatsapp.svg" alt="WhatsApp" width={18} height={18} />
             </a>
             <a href="tel:+18437428228" className="btn-primary" style={{ padding: '9px 18px', fontSize: '0.85rem' }}>
-              <Phone size={14} />
               (843) 742-8228
+              <Phone size={14} />
             </a>
           </div>
 
@@ -125,10 +125,10 @@ export function Navbar() {
             ))}
             <div className="flex flex-col gap-2 mt-4 pb-2">
               <a href="tel:+18437428228" className="btn-primary justify-center">
-                <Phone size={15} /> (843) 742-8228
+                (843) 742-8228 <Phone size={15} />
               </a>
               <a href="https://wa.me/18437428228" target="_blank" rel="noreferrer" className="btn-secondary justify-center">
-                <MessageCircle size={15} /> WhatsApp Us
+                WhatsApp Us <MessageCircle size={15} />
               </a>
             </div>
           </div>
