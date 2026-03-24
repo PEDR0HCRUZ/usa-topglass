@@ -1,8 +1,21 @@
 ---
+import fs from 'fs'
+import path from 'path'
 import Layout from '../layouts/Layout.astro'
 import { Navbar } from '../components/Navbar'
 import { GalleryPage } from '../components/GalleryPage'
 import { Footer } from '../components/Footer'
+
+const IMAGE_EXTS = /\.(jpg|jpeg|png|webp|gif|JPG|JPEG|PNG|WEBP)$/i
+const galleryDir = path.resolve('./public/gallery-medias')
+
+const photos = fs.readdirSync(galleryDir)
+  .filter(f => IMAGE_EXTS.test(f))
+  .sort()
+  .map(f => ({
+    src: `/gallery-medias/${encodeURIComponent(f)}`,
+    label: 'Glass Project',
+  }))
 ---
 
 <Layout
@@ -10,6 +23,6 @@ import { Footer } from '../components/Footer'
   description="Browse our full portfolio of frameless shower doors, glass enclosures and custom glass installations across Myrtle Beach, SC."
 >
   <Navbar client:load />
-  <GalleryPage client:load />
+  <GalleryPage photos={photos} client:load />
   <Footer />
 </Layout>

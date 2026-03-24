@@ -2,51 +2,18 @@ import { useState, useCallback } from 'react'
 import { Phone, MessageCircle } from 'lucide-react'
 import { Lightbox } from './Lightbox'
 
-const photos = [
-  { src: 'https://usa-topglass.vercel.app/media/projects/carrossel%20pg%201.JPG',                                    label: 'Frameless Shower Door' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/carrossel%20pg%202.JPG',                                    label: 'Custom Glass Enclosure' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/carrossel%20pg%203.JPG',                                    label: 'Shower Door Installation' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/carrossel%20pg%204.JPG',                                    label: 'Frameless Glass Enclosure' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2016.02.00.jpeg',        label: 'Frameless Shower with Tub' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg',        label: 'Corner Shower Enclosure' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2016.02.01%20(1).jpeg', label: 'Shower with Plants' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg',        label: 'Corner Glass Enclosure' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg', label: 'Sunroom Glass Installation' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg', label: 'Glass Room Installation' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202024-12-26%20at%2018.12.17.jpeg',        label: 'Decorative Glass Panel' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/614f4c98-2ffe-4b44-a5e8-5249394d1354.jpg',                  label: 'Custom Shower Door' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/Antes%20.jpeg',                                              label: 'Before Installation' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/Durante.jpeg',                                               label: 'During Installation' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/Durante(1).jpeg',                                            label: 'During Installation' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/18.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/19.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/20.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/21.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/22.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/23.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/23a.png', label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/24.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/24b.png', label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/25.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/25(1).png', label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/26.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/31.png',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/33.jpg',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/35.jpg',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/36.jpg',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/37.jpg',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/38.jpg',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/39.jpg',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/40.jpg',  label: 'Glass Project' },
-  { src: 'https://usa-topglass.vercel.app/media/projects/41.png',  label: 'Glass Project' },
-]
+type Photo = { src: string; label: string }
 
-export function GalleryPage() {
+interface Props {
+  photos: Photo[]
+}
+
+export function GalleryPage({ photos }: Props) {
   const [lightbox, setLightbox] = useState<number | null>(null)
 
   const close  = useCallback(() => setLightbox(null), [])
-  const prev   = useCallback(() => setLightbox(i => i !== null ? (i - 1 + photos.length) % photos.length : null), [])
-  const next   = useCallback(() => setLightbox(i => i !== null ? (i + 1) % photos.length : null), [])
+  const prev   = useCallback(() => setLightbox(i => i !== null ? (i - 1 + photos.length) % photos.length : null), [photos.length])
+  const next   = useCallback(() => setLightbox(i => i !== null ? (i + 1) % photos.length : null), [photos.length])
 
   return (
     <>

@@ -15,11 +15,11 @@ const reasons = [
 type Slide = { type: 'image' | 'video'; src: string }
 
 const slides: Slide[] = [
-  { type: 'image', src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg' },
-  { type: 'image', src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg' },
-  { type: 'image', src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg' },
-  { type: 'image', src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg' },
-  { type: 'video', src: 'https://usa-topglass.vercel.app/media/projects/WhatsApp%20Video%202025-02-28%20at%2016.33.08%20(1).mp4' },
+  { type: 'image', src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg' },
+  { type: 'image', src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg' },
+  { type: 'image', src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg' },
+  { type: 'image', src: '/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg' },
+  { type: 'video', src: '/gallery-medias/WhatsApp%20Video%202025-02-28%20at%2016.33.08%20(1).mp4' },
 ]
 
 const INTERVAL = 5000
