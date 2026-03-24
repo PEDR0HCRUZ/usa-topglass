@@ -2,12 +2,12 @@ import { useState, useCallback } from 'react'
 import { ArrowRight } from 'lucide-react'
 import { Lightbox } from './Lightbox'
 const photos = [
-  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg',        label: 'Frameless Shower Door',   location: 'Myrtle Beach, SC' },
-  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.01%20(1).jpeg', label: 'Custom Glass Shower',      location: 'North Myrtle Beach' },
-  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg',        label: 'Sliding Door Repair',     location: 'Myrtle Beach, SC' },
-  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg', label: 'Luxury Shower Upgrade',    location: 'Surfside Beach' },
-  { src: '/media/gallery-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg', label: 'Bathroom Renovation',      location: 'Conway, SC' },
-  { src: '/media/gallery-medias/WhatsApp%20Image%202024-12-26%20at%2018.12.17.jpeg',        label: 'Glass Door Replacement',  location: 'Myrtle Beach, SC' },
+  { src: '/media/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg', label: 'Frameless Shower Door',  location: 'Myrtle Beach, SC' },
+  { src: '/media/IMG_4249.jpg',                                        label: 'Custom Glass Shower',    location: 'North Myrtle Beach' },
+  { src: '/media/IMG_3741.jpg',                                        label: 'Sliding Door Repair',    location: 'Myrtle Beach, SC' },
+  { src: '/media/IMG_1286.jpg',                                        label: 'Luxury Shower Upgrade',  location: 'Surfside Beach' },
+  { src: '/media/614f4c98-2ffe-4b44-a5e8-5249394d1354.jpg',           label: 'Bathroom Renovation',    location: 'Conway, SC' },
+  { src: '/media/IMG_3560.jpg',                                        label: 'Glass Door Replacement', location: 'Myrtle Beach, SC' },
 ]
 
 export function Gallery() {
