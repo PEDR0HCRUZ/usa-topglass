@@ -15,10 +15,10 @@ const reasons = [
 type Slide = { type: 'image' | 'video'; src: string }
 
 const slides: Slide[] = [
-  { type: 'image', src: '/media/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg' },
-  { type: 'image', src: '/media/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg' },
-  { type: 'image', src: '/media/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg' },
-  { type: 'image', src: '/media/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg' },
+  { type: 'image', src: '/media/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).webp' },
+  { type: 'image', src: '/media/WhatsApp%20Image%202025-01-30%20at%2022.58.50.webp' },
+  { type: 'image', src: '/media/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).webp' },
+  { type: 'image', src: '/media/WhatsApp%20Image%202025-01-30%20at%2016.02.01.webp' },
   { type: 'video', src: '/media/WhatsApp%20Video%202025-02-28%20at%2016.33.08%20(1).mp4' },
 ]
 

@@ -1,7 +1,22 @@
 ---
+import fs from 'fs'
+import path from 'path'
 import Layout from '../layouts/Layout.astro'
 import { Navbar } from '../components/Navbar'
 import { Hero } from '../components/Hero'
+
+const IMAGE_EXTS = /\.(jpg|jpeg|png|webp|gif)$/i
+const VIDEO_EXTS = /\.(mp4|webm|mov)$/i
+const carouselDir = path.resolve('./public/media/carousel-medias')
+
+const carouselItems = fs.readdirSync(carouselDir)
+  .filter(f => IMAGE_EXTS.test(f) || VIDEO_EXTS.test(f))
+  .sort()
+  .map(f => ({
+    src: `/media/carousel-medias/${encodeURIComponent(f)}`,
+    type: VIDEO_EXTS.test(f) ? 'video' as const : 'image' as const,
+    alt: 'Glass installation project',
+  }))
 import { TrustBar } from '../components/TrustBar'
 import { Reviews } from '../components/Reviews'
 import { Services } from '../components/Services'
@@ -10,21 +25,72 @@ import { Gallery } from '../components/Gallery'
 import { SecondaryServices } from '../components/SecondaryServices'
 import { ContactForm } from '../components/ContactForm'
 import { Footer } from '../components/Footer'
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "LocalBusiness",
+  "@id": "https://www.usatopglass.com/#business",
+  "name": "USA Top Glass",
+  "description": "Professional frameless shower door installation and custom glass services in Myrtle Beach, SC. Licensed & insured. Free estimates.",
+  "url": "https://www.usatopglass.com",
+  "telephone": "+18437428228",
+  "email": "contact@usatopglass.com",
+  "image": "https://www.usatopglass.com/og-image.jpg",
+  "logo": "https://www.usatopglass.com/logo-blue.webp",
+  "priceRange": "$$",
+  "address": {
+    "@type": "PostalAddress",
+    "addressLocality": "Myrtle Beach",
+    "addressRegion": "SC",
+    "addressCountry": "US"
+  },
+  "geo": {
+    "@type": "GeoCoordinates",
+    "latitude": 33.6891,
+    "longitude": -78.8867
+  },
+  "areaServed": [
+    { "@type": "City", "name": "Myrtle Beach" },
+    { "@type": "City", "name": "North Myrtle Beach" },
+    { "@type": "City", "name": "Conway" },
+    { "@type": "City", "name": "Surfside Beach" },
+    { "@type": "City", "name": "Pawleys Island" },
+    { "@type": "AdministrativeArea", "name": "Horry County" }
+  ],
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Glass Installation Services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Frameless Shower Door Installation" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Custom Glass Shower Doors" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Shower Door Replacement" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Bathroom Glass Installation" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Sliding Door Repair" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Glass Replacement" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Screen Installation & Repair" } }
+    ]
+  },
+  "sameAs": [
+    "https://wa.me/18437428228"
+  ]
+}
 ---
 
 <Layout
   title="USA Top Glass — Frameless Shower Door Installation in Myrtle Beach, SC"
-  description="Professional frameless shower door installation in Myrtle Beach. Custom glass shower doors, enclosures & replacements. Free estimates. Call (843) 742-8228."
-  keywords="frameless shower door myrtle beach, glass shower door installation sc, custom shower enclosure, shower door replacement myrtle beach"
+  description="Professional frameless shower door installation in Myrtle Beach, SC. Custom glass shower doors, enclosures & replacements. Licensed & insured. Free estimates. Call (843) 742-8228."
+  keywords="frameless shower door myrtle beach, glass shower door installation sc, custom shower enclosure myrtle beach, shower door replacement south carolina, bathroom glass installation horry county, glass contractor myrtle beach, frameless glass enclosure, shower glass near me"
+  canonical="/"
+  schema={schema}
 >
   <Navbar client:load />
-  <Hero client:load />
+  <Hero carouselItems={carouselItems} client:load />
   <TrustBar />
   <Reviews client:visible />
   <Services />
   <WhyUs client:load />
   <Gallery client:visible />
-  <SecondaryServices />
+  <SecondaryServices client:visible />
   <ContactForm client:visible />
   <Footer />
 </Layout>

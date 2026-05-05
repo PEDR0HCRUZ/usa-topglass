@@ -44,8 +44,14 @@ export function Navbar() {
             ))}
           </nav>
 
-          {/* CTAs */}
+          {/* Flags + CTAs */}
           <div className="hidden md:flex items-center gap-3">
+            {/* Language flags */}
+            <div className="flex items-center gap-1.5 mr-1">
+              <img src="/us.png" alt="English" className="w-6 h-auto rounded-sm" />
+              <img src="/br.png" alt="Português" className="w-6 h-auto rounded-sm" />
+              <img src="/es.png" alt="Español" className="w-6 h-auto rounded-sm" />
+            </div>
             <a
               href="https://wa.me/18437428228"
               target="_blank"
@@ -130,6 +136,12 @@ export function Navbar() {
               <a href="https://wa.me/18437428228" target="_blank" rel="noreferrer" className="btn-secondary justify-center">
                 WhatsApp Us <MessageCircle size={15} />
               </a>
+              {/* Language flags */}
+              <div className="flex items-center justify-center gap-3 pt-2">
+                <img src="/us.png" alt="English" className="w-7 h-auto rounded-sm" />
+                <img src="/br.png" alt="Português" className="w-7 h-auto rounded-sm" />
+                <img src="/es.png" alt="Español" className="w-7 h-auto rounded-sm" />
+              </div>
             </div>
           </div>
         </div>

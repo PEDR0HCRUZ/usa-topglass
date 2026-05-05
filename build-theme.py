@@ -61,6 +61,8 @@ def process(html, tpl, is_homepage=False):
                 return f'href="{WP_HOME_URL}/#{anchor}"'
             return m.group(0)
         html = re.sub(r'href="#([^"]+)"', fix_anchor, html)
+    # Props JSON dos astro-island (GalleryPage e outros com props) — formato HTML-encoded
+    html = html.replace('&quot;/media/', f'&quot;{WP_UPLOADS_URL}/media/')
     # Injecta CSS variables antes de </head>
     html = html.replace('</head>', CSS_VARS, 1)
     return f'<?php /* Template Name: {tpl} */ ?>\n' + html
@@ -135,10 +137,10 @@ if os.path.exists(astro_src):
             if VERCEL_URL in content:
                 content = content.replace(VERCEL_URL, WP_UPLOADS_URL)
                 changed = True
-            # Paths relativos /gallery-medias/ nos bundles React
-            if '"/media/gallery-medias/' in content or "'/media/gallery-medias/" in content:
-                content = content.replace('"/media/gallery-medias/', f'"{WP_UPLOADS_URL}/gallery-medias/')
-                content = content.replace("'/media/gallery-medias/", f"'{WP_UPLOADS_URL}/gallery-medias/")
+            # Todos os paths relativos /media/ nos bundles React (carousel, gallery, loose files)
+            if '"/media/' in content or "'/media/" in content:
+                content = content.replace('"/media/', f'"{WP_UPLOADS_URL}/media/')
+                content = content.replace("'/media/", f"'{WP_UPLOADS_URL}/media/")
                 changed = True
             if changed:
                 with open(fpath, 'w', encoding='utf-8') as f:

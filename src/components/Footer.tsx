@@ -1,13 +1,13 @@
 import { Phone, Mail, MessageCircle } from 'lucide-react'
 
 const services = [
-  'Frameless Shower Door Installation',
-  'Custom Glass Shower Doors',
-  'Shower Door Replacement',
-  'Bathroom Glass Installation',
-  'Sliding Door Repair',
-  'Glass Replacement',
-  'Screen Installation & Repair',
+  { label: 'Frameless Shower Door Installation', href: '#services' },
+  { label: 'Custom Glass Shower Doors',          href: '#services' },
+  { label: 'Shower Door Replacement',            href: '#services' },
+  { label: 'Bathroom Glass Installation',        href: '#services' },
+  { label: 'Sliding Door Repair',                href: '#sliding-door' },
+  { label: 'Glass Replacement',                  href: '#services' },
+  { label: 'Screen Installation & Repair',       href: '#services' },
 ]
 
 const areas = [
@@ -66,10 +66,10 @@ export function Footer() {
             </h4>
             <ul className="space-y-2.5">
               {services.map((s) => (
-                <li key={s}>
-                  <a href="#services" className="text-xs hover:opacity-80 transition-opacity"
+                <li key={s.label}>
+                  <a href={s.href} className="text-xs hover:opacity-80 transition-opacity"
                      style={{ color: 'rgba(255,255,255,0.5)' }}>
-                    {s}
+                    {s.label}
                   </a>
                 </li>
               ))}
@@ -92,10 +92,10 @@ export function Footer() {
 
         </div>
 
-        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs"
+        <div className="pt-6 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs"
              style={{ color: 'rgba(255,255,255,0.3)' }}>
           <span>© {new Date().getFullYear()} USA Top Glass · All Rights Reserved · Myrtle Beach, SC</span>
-          <span>Licensed & Insured</span>
+          <img src="/licenced.webp" alt="Licensed & Insured" className="h-14 w-auto" />
         </div>
 
       </div>

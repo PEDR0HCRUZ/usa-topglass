@@ -6,9 +6,22 @@ interface Props {
   title: string
   description?: string
   keywords?: string
+  canonical?: string
+  ogImage?: string
+  schema?: object
 }
 
-const { title, description, keywords } = Astro.props
+const {
+  title,
+  description,
+  keywords,
+  canonical,
+  ogImage = '/og-image.jpg',
+  schema,
+} = Astro.props
+
+const siteUrl = 'https://www.usatopglass.com'
+const canonicalUrl = canonical ? `${siteUrl}${canonical}` : `${siteUrl}${Astro.url.pathname}`
 ---
 
 <!doctype html>
@@ -17,9 +30,37 @@ const { title, description, keywords } = Astro.props
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" type="image/svg+xml" href="/utg-icon.svg" />
+
+    <!-- Primary -->
     <title>{title}</title>
     {description && <meta name="description" content={description} />}
     {keywords && <meta name="keywords" content={keywords} />}
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href={canonicalUrl} />
+
+    <!-- Open Graph -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="USA Top Glass" />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:title" content={title} />
+    {description && <meta property="og:description" content={description} />}
+    <meta property="og:image" content={`${siteUrl}${ogImage}`} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_US" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    {description && <meta name="twitter:description" content={description} />}
+    <meta name="twitter:image" content={`${siteUrl}${ogImage}`} />
+
+    <!-- Geo -->
+    <meta name="geo.region" content="US-SC" />
+    <meta name="geo.placename" content="Myrtle Beach" />
+
+    <!-- Structured Data -->
+    {schema && <script type="application/ld+json" set:html={JSON.stringify(schema)} />}
   </head>
   <body>
     <slot />

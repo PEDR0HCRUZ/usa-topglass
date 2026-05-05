@@ -4,32 +4,35 @@ import { Lightbox } from './Lightbox'
 
 type MediaItem = { src: string; type: 'image' | 'video'; alt?: string }
 
-const carouselItems: MediaItem[] = [
-  { src: '/media/carousel-medias/614f4c98-2ffe-4b44-a5e8-5249394d1354.jpg',                   type: 'image', alt: 'Frameless shower door installation' },
-  { src: '/media/carousel-medias/WhatsApp%20Image%202024-12-26%20at%2018.12.17.jpeg',         type: 'image', alt: 'Decorative glass panel' },
-  { src: '/media/carousel-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.00.jpeg',         type: 'image', alt: 'Frameless shower with tub' },
-  { src: '/media/carousel-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.01%20(1).jpeg',  type: 'image', alt: 'Shower with plants' },
-  { src: '/media/carousel-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.01.jpeg',         type: 'image', alt: 'Corner shower enclosure' },
-  { src: '/media/carousel-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(1).jpeg',  type: 'image', alt: 'Sunroom glass installation' },
-  { src: '/media/carousel-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50%20(2).jpeg',  type: 'image', alt: 'Glass room installation' },
-  { src: '/media/carousel-medias/WhatsApp%20Image%202025-01-30%20at%2022.58.50.jpeg',         type: 'image', alt: 'Corner glass enclosure' },
-]
+interface HeroProps {
+  carouselItems: MediaItem[]
+}
 
-export function Hero() {
+export function Hero({ carouselItems }: HeroProps) {
   const trackRef  = useRef<HTMLDivElement>(null)
   const posRef    = useRef(0)
   const rafRef    = useRef<number>()
   const drag      = useRef({ active: false, startX: 0, startPos: 0, moved: false })
   const [lightbox, setLightbox] = useState<number | null>(null)
+  const [mosaicLightbox, setMosaicLightbox] = useState<number | null>(null)
 
-  const closeLightbox = useCallback(() => setLightbox(null), [])
-  const prevPhoto     = useCallback(() => setLightbox(i => i !== null ? (i - 1 + carouselItems.length) % carouselItems.length : null), [])
-  const nextPhoto     = useCallback(() => setLightbox(i => i !== null ? (i + 1) % carouselItems.length : null), [])
+  const closeLightbox      = useCallback(() => setLightbox(null), [])
+  const prevPhoto          = useCallback(() => setLightbox(i => i !== null ? (i - 1 + carouselItems.length) % carouselItems.length : null), [])
+  const nextPhoto          = useCallback(() => setLightbox(i => i !== null ? (i + 1) % carouselItems.length : null), [])
+
+  const mosaicItems: MediaItem[] = [
+    { src: '/media/carousel-medias/WhatsApp%20Image%202026-03-31%20at%2011.55.31.webp', type: 'image', alt: 'Frameless shower door installation' },
+    { src: '/media/carousel-medias/WhatsApp%20Image%202026-03-31%20at%2011.54.34.webp', type: 'image', alt: 'Glass shower installation' },
+    { src: '/media/carousel-medias/WhatsApp%20Image%202026-03-31%20at%2011.56.41.webp', type: 'image', alt: 'Custom glass door' },
+  ]
+  const closeMosaicLightbox = useCallback(() => setMosaicLightbox(null), [])
+  const prevMosaic          = useCallback(() => setMosaicLightbox(i => i !== null ? (i - 1 + 3) % 3 : null), [])
+  const nextMosaic          = useCallback(() => setMosaicLightbox(i => i !== null ? (i + 1) % 3 : null), [])
 
   useEffect(() => {
     const el = trackRef.current
     if (!el) return
-    const SPEED = 0.35
+    const SPEED = 0.8
     let loopWidth = 0
     const tick = () => {
       if (!drag.current.active) {
@@ -76,7 +79,7 @@ export function Hero() {
       {/* Background image */}
       <div className="absolute inset-0">
         <img
-          src="/media/carousel-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.00.jpeg"
+          src="/media/carousel-medias/WhatsApp%20Image%202025-01-30%20at%2016.02.00.webp"
           alt="Luxury frameless shower door installation"
           className="w-full h-full object-cover"
         />
@@ -89,6 +92,7 @@ export function Hero() {
       {/* Hero content */}
       <div className="relative flex-1 flex items-center">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-[114px] w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="max-w-2xl">
 
             {/* Trust ticker */}
@@ -117,24 +121,24 @@ export function Hero() {
             </div>
 
             {/* Headline */}
-            <h1 data-gsap="hero-title"
+            <h1 data-hero-animate
               className="text-white mb-4"
-              style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(2.2rem, 5.5vw, 4rem)', lineHeight: 1.15, textShadow: '0 2px 12px rgba(0,0,0,0.25)' }}
+              style={{ fontFamily: 'var(--font-display)', fontWeight: 700, fontSize: 'clamp(1.6rem, 3.5vw, 2.6rem)', lineHeight: 1.15, textShadow: '0 2px 12px rgba(0,0,0,0.25)' }}
             >
               Frameless Shower
               <br />
-              Door <span style={{ color: '#A8D4F5' }}>Installation</span>
+              Door Installation
               <br />
               in Myrtle Beach, SC
             </h1>
 
-            <p data-gsap="hero-desc" className="mb-8 text-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.95)', maxWidth: '520px' }}>
+            <p data-hero-animate className="mb-8 text-lg leading-relaxed" style={{ color: 'rgba(255,255,255,0.95)', maxWidth: '520px' }}>
               Transform your bathroom with a beautiful, custom frameless shower
               door. Professional installation · Free estimates · Same-week scheduling available.
             </p>
 
             {/* CTAs */}
-            <div data-gsap="hero-ctas" className="flex flex-wrap gap-4">
+            <div data-hero-animate className="flex flex-wrap gap-4">
               <a href="tel:+18437428228" className="btn-white">
                 Call for a Free Estimate
                 <Phone size={16} />
@@ -152,11 +156,52 @@ export function Hero() {
             </div>
 
           </div>
+
+          {/* Hero mosaic — right column */}
+          <div className="hidden lg:block">
+            <div style={{ display: 'grid', gridTemplateColumns: '55% 43%', gridTemplateRows: '245px 225px', gap: '10px' }}>
+              {/* Large image — spans both rows */}
+              <div onClick={() => setMosaicLightbox(0)} style={{ gridRow: '1 / 3', borderRadius: '16px', overflow: 'hidden', boxShadow: '0 20px 50px rgba(0,0,0,0.5)', minHeight: 0, cursor: 'zoom-in' }}>
+                <img
+                  src="/media/carousel-medias/WhatsApp%20Image%202026-03-31%20at%2011.55.31.webp"
+                  alt="Frameless shower door installation"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              </div>
+              {/* Small top */}
+              <div onClick={() => setMosaicLightbox(1)} style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 12px 30px rgba(0,0,0,0.45)', minHeight: 0, cursor: 'zoom-in' }}>
+                <img
+                  src="/media/carousel-medias/WhatsApp%20Image%202026-03-31%20at%2011.54.34.webp"
+                  alt="Glass shower installation"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              </div>
+              {/* Small bottom */}
+              <div onClick={() => setMosaicLightbox(2)} style={{ borderRadius: '16px', overflow: 'hidden', boxShadow: '0 12px 30px rgba(0,0,0,0.45)', minHeight: 0, cursor: 'zoom-in' }}>
+                <img
+                  src="/media/carousel-medias/WhatsApp%20Image%202026-03-31%20at%2011.56.41.webp"
+                  alt="Custom glass door"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                />
+              </div>
+            </div>
+          </div>
+
+          </div>
         </div>
       </div>
 
       {/* Carousel — inside the hero, shares the dark background */}
       <div className="relative pt-16 pb-10">
+
+        {/* Drag hint */}
+        <div className="absolute top-0 right-0 z-20 flex items-center gap-1.5 text-xs font-medium pointer-events-none"
+          style={{ color: 'rgba(255,255,255,0.55)', padding: '8px 16px' }}>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M5 9l-3 3 3 3M9 5l3-3 3 3M15 19l-3 3-3-3M19 9l3 3-3 3M2 12h20M12 2v20"/>
+          </svg>
+          Drag to explore
+        </div>
 
         {/* Fade edges — blend with the hero's dark tones */}
         <div className="absolute inset-y-0 left-0 w-24 z-10 pointer-events-none" style={{ background: 'linear-gradient(to right, rgba(15,35,70,0.85), transparent)' }} />
@@ -205,6 +250,13 @@ export function Hero() {
       onClose={closeLightbox}
       onPrev={prevPhoto}
       onNext={nextPhoto}
+    />
+    <Lightbox
+      items={mosaicItems}
+      index={mosaicLightbox}
+      onClose={closeMosaicLightbox}
+      onPrev={prevMosaic}
+      onNext={nextMosaic}
     />
     </>
   )

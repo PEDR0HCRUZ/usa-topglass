@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 
-type LightboxItem = { src: string; alt?: string }
+type LightboxItem = { src: string; type?: 'image' | 'video'; alt?: string }
 
 interface LightboxProps {
   items: LightboxItem[]
@@ -52,11 +52,20 @@ export function Lightbox({ items, index, onClose, onPrev, onNext }: LightboxProp
           <ChevronLeft size={22} />
         </button>
 
-        <img
-          src={items[index].src}
-          alt={items[index].alt ?? `Photo ${index + 1}`}
-          style={{ width: '100%', maxHeight: '85vh', objectFit: 'contain', borderRadius: '6px', userSelect: 'none', display: 'block' }}
-        />
+        {items[index].type === 'video' ? (
+          <video
+            src={items[index].src}
+            controls
+            autoPlay
+            style={{ width: '100%', maxHeight: '85vh', borderRadius: '6px', display: 'block', outline: 'none' }}
+          />
+        ) : (
+          <img
+            src={items[index].src}
+            alt={items[index].alt ?? `Photo ${index + 1}`}
+            style={{ width: '100%', maxHeight: '85vh', objectFit: 'contain', borderRadius: '6px', userSelect: 'none', display: 'block' }}
+          />
+        )}
 
         <button
           onClick={e => { e.stopPropagation(); onNext() }}

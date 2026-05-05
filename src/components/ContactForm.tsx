@@ -1,6 +1,62 @@
-import { Phone, MessageCircle, Mail, MapPin, Send } from 'lucide-react'
+import { useState } from 'react'
+import { Phone, MessageCircle, Mail, MapPin, Send, CheckCircle, AlertCircle, Loader } from 'lucide-react'
+
+// 1. Go to https://web3forms.com
+// 2. Enter contact@usatopglass.com and click "Create Access Key"
+// 3. Paste the key below
+const WEB3FORMS_KEY = 'e04abc3a-76bd-4cd2-a412-ca121f684aac'
+
+type Status = 'idle' | 'loading' | 'success' | 'error'
+
+function formatPhone(value: string) {
+  const digits = value.replace(/\D/g, '').slice(0, 10)
+  if (digits.length <= 3) return digits
+  if (digits.length <= 6) return `(${digits.slice(0, 3)}) ${digits.slice(3)}`
+  return `(${digits.slice(0, 3)}) ${digits.slice(3, 6)}-${digits.slice(6)}`
+}
 
 export function ContactForm() {
+  const [status, setStatus] = useState<Status>('idle')
+  const [phone, setPhone] = useState('')
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    setStatus('loading')
+
+    const form = e.currentTarget
+    const data = new FormData(form)
+    data.append('access_key', WEB3FORMS_KEY)
+    data.append('subject', 'New Estimate Request — USA Top Glass')
+    data.append('from_name', 'USA Top Glass Website')
+
+    try {
+      const res = await fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: data,
+      })
+      const json = await res.json()
+      if (json.success) {
+        setStatus('success')
+        setPhone('')
+        form.reset()
+      } else {
+        setStatus('error')
+      }
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  const inputStyle = {
+    borderColor: 'var(--border)',
+    backgroundColor: 'var(--bg)',
+    color: 'var(--dark)',
+  }
+  const focusIn = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    (e.target.style.borderColor = 'var(--blue-mid)')
+  const focusOut = (e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) =>
+    (e.target.style.borderColor = 'var(--border)')
+
   return (
     <section data-section="contact" id="contact" className="pt-[92px] pb-[140px]" style={{ background: 'linear-gradient(135deg, #0F2346 0%, #1B4F8A 55%, #2E86C1 100%)' }}>
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
@@ -49,75 +105,96 @@ export function ContactForm() {
                 </div>
               </div>
             ))}
-
           </div>
 
           {/* Right — Form */}
-          <form onSubmit={(e) => e.preventDefault()} className="rounded-xl p-8" style={{ backgroundColor: 'var(--surface)' }}>
-            <div className="grid sm:grid-cols-2 gap-5 mb-5">
+          <form onSubmit={handleSubmit} className="rounded-xl p-8" style={{ backgroundColor: 'var(--surface)' }}>
 
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Your Name *</label>
-                <input type="text" required placeholder="John Smith"
-                  className="w-full px-4 py-3 text-sm rounded border outline-none transition-all"
-                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)', color: 'var(--dark)' }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--blue-mid)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Phone Number *</label>
-                <input type="tel" required placeholder="(843) 000-0000"
-                  className="w-full px-4 py-3 text-sm rounded border outline-none transition-all"
-                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)', color: 'var(--dark)' }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--blue-mid)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Email Address</label>
-                <input type="email" placeholder="john@email.com"
-                  className="w-full px-4 py-3 text-sm rounded border outline-none transition-all"
-                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)', color: 'var(--dark)' }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--blue-mid)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
-                />
-              </div>
-
-              <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Service Needed</label>
-                <select className="w-full px-4 py-3 text-sm rounded border outline-none transition-all"
-                  style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)', color: 'var(--dark)' }}
-                  onFocus={(e) => (e.target.style.borderColor = 'var(--blue-mid)')}
-                  onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
+            {status === 'success' ? (
+              <div className="flex flex-col items-center justify-center gap-4 py-12 text-center">
+                <CheckCircle size={48} style={{ color: '#22c55e' }} />
+                <h3 className="text-xl font-bold" style={{ color: 'var(--blue-deep)' }}>Request Sent!</h3>
+                <p className="text-sm" style={{ color: 'var(--dark)', opacity: 0.7 }}>
+                  Thank you! We'll get back to you shortly with your free estimate.
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setStatus('idle')}
+                  className="mt-2 text-sm underline"
+                  style={{ color: 'var(--blue-mid)' }}
                 >
-                  <option value="">Select a service...</option>
-                  <option>Frameless Shower Door Installation</option>
-                  <option>Custom Shower Door</option>
-                  <option>Shower Door Replacement</option>
-                  <option>Sliding Door Repair</option>
-                  <option>Other Glass Service</option>
-                </select>
+                  Send another message
+                </button>
               </div>
-            </div>
+            ) : (
+              <>
+                <div className="grid sm:grid-cols-2 gap-5 mb-5">
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Your Name *</label>
+                    <input type="text" name="name" required placeholder="John Smith"
+                      className="w-full px-4 py-3 text-sm rounded border outline-none transition-all"
+                      style={inputStyle} onFocus={focusIn} onBlur={focusOut}
+                    />
+                  </div>
 
-            <div className="mb-6">
-              <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Message / Project Details</label>
-              <textarea rows={4} placeholder="Tell us about your project..."
-                className="w-full px-4 py-3 text-sm rounded border outline-none transition-all resize-none"
-                style={{ borderColor: 'var(--border)', backgroundColor: 'var(--bg)', color: 'var(--dark)' }}
-                onFocus={(e) => (e.target.style.borderColor = 'var(--blue-mid)')}
-                onBlur={(e) => (e.target.style.borderColor = 'var(--border)')}
-              />
-            </div>
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Phone Number *</label>
+                    <input type="tel" name="phone" required placeholder="(843) 000-0000"
+                      value={phone}
+                      onChange={(e) => setPhone(formatPhone(e.target.value))}
+                      className="w-full px-4 py-3 text-sm rounded border outline-none transition-all"
+                      style={inputStyle} onFocus={focusIn} onBlur={focusOut}
+                    />
+                  </div>
 
-            <button type="submit" className="btn-primary w-full justify-center">
-              <Send size={16} />
-              Request a Free Estimate
-            </button>
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Email Address</label>
+                    <input type="email" name="email" placeholder="john@email.com"
+                      className="w-full px-4 py-3 text-sm rounded border outline-none transition-all"
+                      style={inputStyle} onFocus={focusIn} onBlur={focusOut}
+                    />
+                  </div>
 
+                  <div>
+                    <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Service Needed</label>
+                    <select name="service"
+                      className="w-full px-4 py-3 text-sm rounded border outline-none transition-all"
+                      style={inputStyle} onFocus={focusIn} onBlur={focusOut}
+                    >
+                      <option value="">Select a service...</option>
+                      <option>Frameless Shower Door Installation</option>
+                      <option>Custom Shower Door</option>
+                      <option>Shower Door Replacement</option>
+                      <option>Sliding Door Repair</option>
+                      <option>Other Glass Service</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="mb-6">
+                  <label className="block text-xs font-semibold uppercase tracking-wider mb-1.5" style={{ color: 'var(--blue-deep)' }}>Message / Project Details</label>
+                  <textarea name="message" rows={4} placeholder="Tell us about your project..."
+                    className="w-full px-4 py-3 text-sm rounded border outline-none transition-all resize-none"
+                    style={inputStyle} onFocus={focusIn} onBlur={focusOut}
+                  />
+                </div>
+
+                {status === 'error' && (
+                  <div className="flex items-center gap-2 mb-4 p-3 rounded" style={{ backgroundColor: '#fee2e2', color: '#dc2626' }}>
+                    <AlertCircle size={16} />
+                    <span className="text-sm">Something went wrong. Please try again or call us directly.</span>
+                  </div>
+                )}
+
+                <button type="submit" disabled={status === 'loading'} className="btn-primary w-full justify-center disabled:opacity-60 disabled:cursor-not-allowed">
+                  {status === 'loading' ? (
+                    <><Loader size={16} className="animate-spin" /> Sending...</>
+                  ) : (
+                    <><Send size={16} /> Request a Free Estimate</>
+                  )}
+                </button>
+              </>
+            )}
           </form>
 
         </div>
